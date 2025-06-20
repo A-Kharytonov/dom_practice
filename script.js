@@ -14,34 +14,44 @@ var playList = [
 
 btn.onclick = showSong
 
-let count = 0
 
 function showSong() {
-	if (count < playList.length) {
-		const item = playList[count]
-		const li = document.createElement('li')
-		li.textContent = `${item.author} - ${item.song}`
-		ol.appendChild(li);
-		count++;
+	const {author, song} = playList[ol.childElementCount]
+	const li = document.createElement('li')
+	li.textContent = `${author} - ${song}`
+	ol.appendChild(li);
+	updateButton();
 
-		li.onclick = function () {
-			li.remove()
-			count--
-			
-			if (count < playList.length) {
-				btn.disabled = false;
-				btn.textContent = "Click to see";
-			}
-		}
-
-	}else {
-    btn.disabled = true;
-    btn.textContent = "Усі пісні показано";
-  }
+	li.onclick = function () {
+		li.remove()
+		updateButton();
+	}
 }
 
+
+function updateButton() {
+	const fullList = playList.length === ol.childElementCount;
+
+	btn.disabled = fullList;
+	btn.textContent = fullList ? "Усі пісні показано" : "Click to see";
+}
 // playList.forEach(function(item) {
 // 	const li = document.createElement('li');
 // 	li.textContent = `${item.author} - ${item.song}`
 // 	ol.appendChild(li);
 // });
+
+const openBtn = document.getElementById('open');
+const closeBtn = document.getElementById('close')
+const modal = document.getElementById('modal')
+
+
+openBtn.onclick = function() {
+	modal.style.display = 'flex'
+	openBtn.hidden = true
+}
+
+closeBtn.onclick = function() {
+	modal.style.display = 'none'
+	openBtn.hidden = false
+}
