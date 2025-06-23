@@ -55,3 +55,37 @@ closeBtn.onclick = function() {
 	modal.style.display = 'none'
 	openBtn.hidden = false
 }
+
+const onBtn = document.getElementById('on');
+const switchBtn = document.getElementById('switch');
+const lights = document.querySelectorAll('.ligth');
+
+let current = -1;
+let isOn = false;
+
+function updateLights() {
+  for (let i = 0; i < lights.length; i++) {
+    lights[i].style.opacity = 0.2;
+  }
+  if (isOn && current >= 0) {
+    lights[current].style.opacity = 1;
+  }
+}
+
+onBtn.onclick = function() {
+  isOn = !isOn;
+  if (isOn) {
+    current = 0;
+  } else {
+    current = -1;
+  }
+  updateLights();
+};
+
+switchBtn.onclick = function() {
+  if (!isOn) return;
+  current = (current + 1) % lights.length;
+  updateLights();
+};
+
+updateLights();
